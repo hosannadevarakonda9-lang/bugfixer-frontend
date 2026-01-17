@@ -7,6 +7,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    //  won't refresh file
 
     if (!email || !password) {
       setError("Email and Password are required");
