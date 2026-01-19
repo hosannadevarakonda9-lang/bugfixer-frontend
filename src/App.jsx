@@ -8,7 +8,6 @@ function App() {
         <Route path="/login" element={<Login />} />
        
       </Routes>
-
        <h1><b>Welcome to The BugFixer Project</b></h1>
     </BrowserRouter>
   );
