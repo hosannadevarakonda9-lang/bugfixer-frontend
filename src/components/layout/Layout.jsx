@@ -1,16 +1,17 @@
-import Sidebar from "./Sidebar";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const Layout = ({ children }) => {
-  return (
-    <div className="flex">
-      {/* Sidebar */}
-      <Sidebar />
+  const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
 
-      {/* Main Content */}
-      <div className="flex-1">
-        <Header />
-        <main className="p-6">
+  return (
+    <div className="min-h-screen flex">
+      {isAuthenticated && <Sidebar />}
+      
+      <div className="flex-1 flex flex-col">
+        {isAuthenticated && <Header />}
+        
+        <main className="flex-1 p-4 md:p-6 bg-gray-50 overflow-y-auto">
           {children}
         </main>
       </div>
