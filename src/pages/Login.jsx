@@ -8,6 +8,7 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,13 +32,19 @@ const Login = () => {
 
     if (!validateForm()) return;
 
-    localStorage.setItem("isLoggedIn", "true");
-    
-    if (rememberMe) {
-      localStorage.setItem("rememberedEmail", email);
-    }
+    setLoading(true); // ✅ Start loading
 
-    navigate("/dashboard");
+    // Simulate API call (1 second delay)
+    setTimeout(() => {
+      localStorage.setItem("isLoggedIn", "true");
+
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+      }
+
+      setLoading(false); // ✅ Stop loading
+      navigate("/dashboard");
+    }, 1000);
   };
 
   const isFormValid = email.includes("@") && password.length >= 6;
@@ -93,14 +100,20 @@ const Login = () => {
         {/* Login Button */}
         <button
           type="submit"
-          disabled={!isFormValid}
-          className={`w-full p-2 rounded text-white transition ${
-            isFormValid
+          disabled={!isFormValid || loading} // ✅ Disable during loading
+          className={`w-full p-2 rounded text-white transition flex items-center justify-center gap-2 ${isFormValid && !loading
               ? "bg-blue-600 hover:bg-blue-700"
               : "bg-gray-400 opacity-50 cursor-not-allowed"
-          }`}
+            }`}
         >
-          Login
+          {loading ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              Logging in...
+            </>
+          ) : (
+            "Login"
+          )}
         </button>
       </form>
     </div>
