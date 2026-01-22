@@ -1,7 +1,9 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import PrivateRoute from "./components/PrivateRoute";
+import { ROUTES } from "./constants/routes";
+import Login from "./pages/auth/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import PrivateRoute from "./components/auth/PrivateRoute";
 
 function App() {
   const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
@@ -9,16 +11,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route 
-          path="/dashboard" 
+          path={ROUTES.DASHBOARD} 
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <Dashboard />
             </PrivateRoute>
           } 
         />
-        <Route path="/" element={<Login />} />
+        <Route path={ROUTES.HOME} element={<Login />} />
       </Routes>
     </Router>
   );
